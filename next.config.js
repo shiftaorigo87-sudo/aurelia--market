@@ -5,6 +5,12 @@ const nextConfig = {
     domains: ['localhost', 'images.unsplash.com'],
     formats: ['image/webp'],
   },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+  typescript: {
+    ignoreBuildErrors: false,
+  },
   // Webpack configuration to handle module resolution issues
   webpack: (config, { isServer }) => {
     // Fix for module resolution issues
@@ -16,26 +22,7 @@ const nextConfig = {
       crypto: false,
     };
 
-    // Ignore specific modules that cause issues
-    config.externals = config.externals || [];
-    if (isServer) {
-      config.externals.push({
-        'utf-8-validate': 'commonjs utf-8-validate',
-        'bufferutil': 'commonjs bufferutil',
-      });
-    }
-
     return config;
-  },
-  // Disable static page generation for API routes
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '2mb',
-    },
-  },
-  // Skip build-time page generation for dynamic routes
-  generateBuildId: async () => {
-    return 'build-' + Date.now()
   },
 }
 
