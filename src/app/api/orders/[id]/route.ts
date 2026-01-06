@@ -3,6 +3,9 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { getAuthUser } from '@/middleware/auth';
 import { handleApiError, ApiError } from '@/middleware/errorHandler';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // GET single order
 export async function GET(
   request: NextRequest,

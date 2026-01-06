@@ -5,6 +5,9 @@ import { handleApiError, ApiError } from '@/middleware/errorHandler';
 import { z } from 'zod';
 import { OrderStatus } from '@/types';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 const updateStatusSchema = z.object({
   status: z.enum(['pending', 'paid', 'shipped', 'delivered', 'cancelled']),
 });

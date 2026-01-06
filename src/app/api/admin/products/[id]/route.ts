@@ -4,6 +4,9 @@ import { requireAdmin } from '@/middleware/auth';
 import { handleApiError, ApiError } from '@/middleware/errorHandler';
 import { z } from 'zod';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 const productUpdateSchema = z.object({
   name: z.string().min(1).optional(),
   description: z.string().optional(),

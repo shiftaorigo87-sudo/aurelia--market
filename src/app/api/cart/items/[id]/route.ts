@@ -4,6 +4,9 @@ import { getAuthUser } from '@/middleware/auth';
 import { handleApiError, ApiError } from '@/middleware/errorHandler';
 import { z } from 'zod';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 const updateQuantitySchema = z.object({
   quantity: z.number().int().positive(),
 });
