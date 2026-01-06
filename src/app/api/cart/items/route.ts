@@ -4,6 +4,9 @@ import { getAuthUser } from '@/middleware/auth';
 import { handleApiError, ApiError } from '@/middleware/errorHandler';
 import { z } from 'zod';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 const addToCartSchema = z.object({
   productId: z.string().uuid(),
   quantity: z.number().int().positive().default(1),

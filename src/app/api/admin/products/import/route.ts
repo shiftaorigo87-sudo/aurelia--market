@@ -4,6 +4,9 @@ import { supabase } from '@/lib/supabase';
 import { ApiError } from '@/middleware/errorHandler';
 import crypto from 'crypto';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // Dekryptera API-nyckel
 function decryptApiKey(encrypted: string, ivHex: string): string {
   const ENCRYPTION_KEY = process.env.API_KEY_ENCRYPTION_SECRET || 'default-secret-key-change-in-production';

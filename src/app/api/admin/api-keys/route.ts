@@ -4,6 +4,9 @@ import { supabase } from '@/lib/supabase';
 import { ApiError } from '@/middleware/errorHandler';
 import crypto from 'crypto';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 // Krypteringsnyckel från miljövariabel
 const ENCRYPTION_KEY = process.env.API_KEY_ENCRYPTION_SECRET || 'default-secret-key-change-in-production';
 const ALGORITHM = 'aes-256-cbc';

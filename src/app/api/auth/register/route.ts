@@ -6,6 +6,9 @@ import { z } from 'zod';
 import { strictRateLimit } from '@/lib/rateLimit';
 import { sanitizeInput } from '@/middleware/security';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 const registerSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
