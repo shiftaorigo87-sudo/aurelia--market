@@ -1,0 +1,34 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { supabaseAdmin } from '@/lib/supabase';
+import { getAuthUser } from '@/middleware/auth';
+import { handleApiError } from '@/middleware/errorHandler';
+
+// GET cart
+export async function GET(request: NextRequest) {
+  try {
+    const user = getAuthUser(request);
+
+    const { data: cartItems, error } = await supabaseAdmin
+      .from('cart_items')
+      .select(`
+        *,
+        product:products(*)
+      `)
+      .eq('user_id', user.userId);
+
+    if (error) throw error;
+
+    const totalPrice = cartItems?.reduce(
+      (sum, item) => sum + (item.product.price * item.quantity),
+      0
+    ) || 0;
+
+    return NextResponse.json({
+      items: cartItems || [],
+      totalPrice,
+      totalItems: cartItems?.reduce((sum, item) => sum + item.quantity, 0) || 0,
+    });
+  } catch (error) {
+    return handleApiError(error);
+  }
+}
