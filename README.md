@@ -1,6 +1,6 @@
 # Aurelia Market - Professionell E-handelsplattform
 
-En modern, professionell e-handelsplattform byggd med Next.js, TypeScript och Tailwind CSS.
+En modern, professionell e-handelsplattform byggd med Next.js 14, TypeScript och Tailwind CSS.
 
 ## 🌟 Funktioner
 
