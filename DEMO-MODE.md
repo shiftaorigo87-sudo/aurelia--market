@@ -12,19 +12,23 @@ Demo Mode låter dig testa e-handeln med fiktiva produkter **utan** att behöva 
 ## ✅ Vad fungerar i Demo Mode:
 
 ### Fullt fungerande:
-- ✅ **Produktvisning** - 6 fiktiva smyckesprodukter
-- ✅ **Sökfunktion** - Sök bland produkter
+- ✅ **Produktvisning** - 1 demo-produkt (försvinner automatiskt när riktiga produkter läggs till)
+- ✅ **Sökfunktion** - Professionellt placerad i header, sök bland produkter
 - ✅ **Produktdetaljer** - Klicka på produkter för mer info
+- ✅ **Registrering/Inloggning** - Fungerar med mock-användare (alla inloggningar accepteras)
+- ✅ **Kundvagn** - Lägg till produkter, uppdatera antal, ta bort items
+- ✅ **Checkout** - Skapa beställningar (utan riktig betalning)
+- ✅ **Beställningar** - Visa alla dina beställningar
+- ✅ **Orderspårning** - Visuell progress med status (Betald → Skickad → Levererad)
 - ✅ **Responsiv design** - Fungerar på mobil, tablet, desktop
 - ✅ **Navigation** - Alla sidor och menyer
-- ✅ **UI-komponenter** - Header, Footer, Layout
+- ✅ **UI-komponenter** - Header med sökfält, Footer, Layout
 
 ### Begränsat/Inte fungerande:
-- ❌ **Registrering/Inloggning** - Kräver databas
-- ❌ **Kundvagn** - Kräver databas för att spara
-- ❌ **Beställningar** - Kräver databas
 - ❌ **Admin-panel** - Kräver databas och autentisering
-- ❌ **Betalningar** - Kräver Stripe-konfiguration
+- ❌ **Riktiga betalningar** - Stripe integration kräver konfiguration
+- ❌ **E-postnotiser** - Kräver e-posttjänst
+- ❌ **Persistent data** - Data försvinner vid server-omstart (in-memory)
 
 ## 🚀 Starta Demo Mode
 
@@ -46,23 +50,48 @@ npm run dev
 - **Startsida:** http://localhost:3000
 - **Produkter:** http://localhost:3000/products
 
-## 📦 Fiktiva Produkter
+## 📦 Demo Produkt
 
-Demo Mode innehåller 6 smyckesprodukter:
+Demo Mode innehåller 1 tillfällig demo-produkt:
 
-1. **Lyxig Guldarmband** - 12,999 kr
-2. **Diamantring** - 24,999 kr
-3. **Pärla Halsband** - 8,999 kr
-4. **Guldörhängen** - 5,999 kr
-5. **Silverarmband** - 3,999 kr
-6. **Safirring** - 18,999 kr
+1. **Demo Produkt** - 9,999 kr
+   - Detta är en tillfällig produkt som automatiskt försvinner när riktiga produkter läggs till i databasen
 
-Alla produkter har:
+Produkten har:
 - Produktnamn
 - Beskrivning
 - Pris
 - Bild (från Unsplash)
 - Lagerstatus
+
+## 🔐 Demo Inloggning
+
+I demo mode kan du:
+- **Registrera dig** med vilken e-postadress som helst
+- **Logga in** med vilken e-postadress och lösenord som helst
+- Alla inloggningar accepteras automatiskt
+- En mock-användare skapas för dig
+
+## 🛒 Demo E-handel
+
+Du kan testa hela e-handelsflödet:
+
+1. **Bläddra produkter** - Se demo-produkten
+2. **Sök produkter** - Använd sökfältet i header
+3. **Lägg till i kundvagn** - Klicka "Lägg till i kundvagn"
+4. **Visa kundvagn** - Se dina produkter, uppdatera antal
+5. **Gå till kassan** - Skapa en beställning
+6. **Spåra order** - Se orderstatus med visuell progress
+
+## 📍 Orderspårning
+
+Demo mode inkluderar full orderspårning:
+
+- **Betald** ✓ - Betalning bekräftad
+- **Skickad** 🚚 - Order på väg
+- **Levererad** 🏠 - Order levererad
+
+Visuell progress bar visar var din order befinner sig i processen.
 
 ## 🔄 Byta till Production Mode
 
@@ -127,9 +156,18 @@ export const mockProducts: Product[] = [
 
 ### Filer som stödjer Demo Mode:
 
-- `src/lib/mockData.ts` - Mock data och helper functions
+- `src/lib/mockData.ts` - Mock data och helper functions för produkter, användare, kundvagn och ordrar
 - `src/app/api/products/route.ts` - Produktlista API
 - `src/app/api/products/[id]/route.ts` - Enskild produkt API
+- `src/app/api/auth/register/route.ts` - Registrering API
+- `src/app/api/auth/login/route.ts` - Inloggning API
+- `src/app/api/cart/route.ts` - Kundvagn API
+- `src/app/api/cart/items/route.ts` - Lägg till i kundvagn API
+- `src/app/api/cart/items/[id]/route.ts` - Uppdatera/ta bort från kundvagn API
+- `src/app/api/orders/route.ts` - Ordrar API
+- `src/app/api/orders/[id]/route.ts` - Enskild order API
+- `src/app/api/checkout/create-payment-intent/route.ts` - Checkout API
+- `src/components/Header.tsx` - Header med sökfunktion
 
 ### Lägg till Demo Mode i fler API routes:
 
