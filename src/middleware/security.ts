@@ -3,10 +3,15 @@ import DOMPurify from 'isomorphic-dompurify';
 // XSS-skydd - Sanitera input
 export function sanitizeInput(input: any): any {
   if (typeof input === 'string') {
-    return DOMPurify.sanitize(input, { 
+    // Sanitera strängen och trimma whitespace
+    const sanitized = DOMPurify.sanitize(input, { 
       ALLOWED_TAGS: [],
-      ALLOWED_ATTR: []
+      ALLOWED_ATTR: [],
+      RETURN_DOM: false,
+      RETURN_DOM_FRAGMENT: false
     });
+    // DOMPurify.sanitize returnerar alltid en sträng, så vi behöver inte konvertera
+    return typeof sanitized === 'string' ? sanitized.trim() : String(sanitized).trim();
   }
   
   if (Array.isArray(input)) {
@@ -16,11 +21,14 @@ export function sanitizeInput(input: any): any {
   if (typeof input === 'object' && input !== null) {
     const sanitized: any = {};
     for (const key in input) {
-      sanitized[key] = sanitizeInput(input[key]);
+      if (input.hasOwnProperty(key)) {
+        sanitized[key] = sanitizeInput(input[key]);
+      }
     }
     return sanitized;
   }
   
+  // Returnera primitiva värden som de är (number, boolean, null, undefined)
   return input;
 }
 

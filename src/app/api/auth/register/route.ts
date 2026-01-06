@@ -20,11 +20,33 @@ export async function POST(request: NextRequest) {
     // Rate limiting
     strictRateLimit(request);
     
-    const body = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch (jsonError) {
+      console.error('JSON parse error:', jsonError);
+      return NextResponse.json(
+        { error: 'Ogiltig förfrågan - JSON-fel' },
+        { status: 400 }
+      );
+    }
     
     // Sanitera input
     const sanitizedBody = sanitizeInput(body);
-    const { email, password } = registerSchema.parse(sanitizedBody);
+    
+    // Validera input
+    let validatedData;
+    try {
+      validatedData = registerSchema.parse(sanitizedBody);
+    } catch (validationError) {
+      console.error('Validation error:', validationError);
+      return NextResponse.json(
+        { error: 'Ogiltig e-postadress eller lösenord (minst 8 tecken krävs)' },
+        { status: 400 }
+      );
+    }
+    
+    const { email, password } = validatedData;
 
     // Demo mode - returnera mock user
     if (isDemoMode()) {
@@ -50,7 +72,7 @@ export async function POST(request: NextRequest) {
 
     if (existingUser) {
       return NextResponse.json(
-        { error: 'Email already registered' },
+        { error: 'E-postadressen är redan registrerad' },
         { status: 400 }
       );
     }
@@ -90,8 +112,17 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Registration error:', error);
+    
+    // Ge mer specifika felmeddelanden
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Ogiltig e-postadress eller lösenord' },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
-      { error: 'Registration failed' },
+      { error: 'Registrering misslyckades. Försök igen.' },
       { status: 500 }
     );
   }
