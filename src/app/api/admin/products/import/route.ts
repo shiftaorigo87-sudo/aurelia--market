@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/middleware/auth';
 import { supabase } from '@/lib/supabase';
 import { ApiError } from '@/middleware/errorHandler';
+import { decrypt } from '@/lib/encryption';
 
-// Force dynamic rendering
+// Force dynamic rendering and Node.js runtime
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
@@ -26,11 +27,25 @@ export async function POST(request: NextRequest) {
     requireAdmin(request);
     
     const body = await request.json();
-    const { api_key, endpoint } = body;
+    const { api_key_id, endpoint } = body;
     
-    if (!api_key) {
-      throw new ApiError(400, 'API key är obligatoriskt');
+    if (!api_key_id) {
+      throw new ApiError(400, 'API key ID är obligatoriskt');
     }
+    
+    // Hämta API-nyckel från databasen
+    const { data: apiKeyData, error: apiKeyError } = await supabase
+      .from('api_keys')
+      .select('encrypted_key, iv, provider')
+      .eq('id', api_key_id)
+      .single();
+    
+    if (apiKeyError || !apiKeyData) {
+      throw new ApiError(404, 'API-nyckel hittades inte');
+    }
+    
+    // Dekryptera API-nyckeln
+    const apiKey = decrypt(apiKeyData.encrypted_key, apiKeyData.iv);
     
     // Anropa extern API (exempel med generisk implementation)
     const externalEndpoint = endpoint || 'https://api.example.com/products';
@@ -39,7 +54,7 @@ export async function POST(request: NextRequest) {
     try {
       const response = await fetch(externalEndpoint, {
         headers: {
-          'Authorization': `Bearer ${api_key}`,
+          'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
         }
       });
