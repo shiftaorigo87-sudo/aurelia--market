@@ -1,3 +1,6 @@
+// Force dynamic rendering to prevent prerendering errors
+export const dynamic = 'force-dynamic';
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -10,9 +13,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);
-
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
 
 export default function CheckoutPage() {
   const [clientSecret, setClientSecret] = useState('');

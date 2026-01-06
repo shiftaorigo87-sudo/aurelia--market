@@ -1,3 +1,6 @@
+// Force dynamic rendering to prevent prerendering errors
+export const dynamic = 'force-dynamic';
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -6,9 +9,6 @@ import Layout from '@/components/Layout';
 import { Product } from '@/types';
 import { useCartStore } from '@/store/cartStore';
 import Image from 'next/image';
-
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
 
 export default function ProductDetailPage() {
   const params = useParams();

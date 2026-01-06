@@ -1,3 +1,6 @@
+// Force dynamic rendering to prevent prerendering errors
+export const dynamic = 'force-dynamic';
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -6,9 +9,6 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Order } from '@/types';
-
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);

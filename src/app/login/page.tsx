@@ -1,3 +1,6 @@
+// Force dynamic rendering to prevent prerendering errors
+export const dynamic = 'force-dynamic';
+
 'use client';
 
 import Layout from '@/components/Layout';
@@ -5,9 +8,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-
-// Force dynamic rendering
-export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
