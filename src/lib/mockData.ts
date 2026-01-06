@@ -4,11 +4,99 @@ import { Product, User, CartItem, Order, OrderStatus } from '@/types';
 export const mockProducts: Product[] = [
   {
     id: 'demo-1',
-    name: 'Demo Produkt',
-    description: 'Detta är en tillfällig demo-produkt. Riktiga produkter kommer att läggas till senare.',
-    price: 9999,
-    image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&h=500&fit=crop',
-    stock: 10,
+    name: 'Premium Läderväska',
+    description: 'Elegant läderväska i högsta kvalitet. Perfekt för både arbete och fritid. Rymlig med flera fack för optimal organisation.',
+    price: 2499,
+    image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&h=800&fit=crop',
+    stock: 15,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'demo-2',
+    name: 'Trådlösa Hörlurar Pro',
+    description: 'Premiumhörlurar med aktiv brusreducering och kristallklart ljud. Upp till 30 timmars batteritid.',
+    price: 1899,
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=800&fit=crop',
+    stock: 25,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'demo-3',
+    name: 'Smartklocka Elite',
+    description: 'Avancerad smartklocka med hälsoövervakning, GPS och vattentät design. Kompatibel med iOS och Android.',
+    price: 3299,
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=800&fit=crop',
+    stock: 12,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'demo-4',
+    name: 'Designer Solglasögon',
+    description: 'Exklusiva solglasögon med UV-skydd och polariserade linser. Tidlös design som passar alla ansiktsformer.',
+    price: 1599,
+    image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800&h=800&fit=crop',
+    stock: 20,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'demo-5',
+    name: 'Minimalistisk Plånbok',
+    description: 'Slimmad plånbok i äkta läder med RFID-skydd. Rymmer upp till 8 kort och kontanter.',
+    price: 599,
+    image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&h=800&fit=crop',
+    stock: 30,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'demo-6',
+    name: 'Bärbar Högtalare',
+    description: 'Kraftfull Bluetooth-högtalare med 360° ljud. Vattentät och perfekt för utomhusbruk.',
+    price: 1299,
+    image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&h=800&fit=crop',
+    stock: 18,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'demo-7',
+    name: 'Fitness Tracker',
+    description: 'Kompakt aktivitetsarmband med pulsmätare, stegräknare och sömnanalys. 7 dagars batteritid.',
+    price: 899,
+    image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=800&h=800&fit=crop',
+    stock: 22,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'demo-8',
+    name: 'Laptop Ryggsäck',
+    description: 'Ergonomisk ryggsäck med skyddad laptopficka upp till 15". Vattentåligt material och USB-laddningsport.',
+    price: 1199,
+    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&h=800&fit=crop',
+    stock: 16,
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 'demo-9',
+    name: 'Trådlös Laddare',
+    description: 'Snabbladdare för smartphones med Qi-teknologi. Elegant design i aluminium.',
+    price: 499,
+    image: 'https://images.unsplash.com/photo-1591290619762-d2c9e0a4e6d1?w=800&h=800&fit=crop',
+    stock: 35,
     active: true,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -172,5 +260,10 @@ export function getMockProduct(id: string): Product | undefined {
 }
 
 export function isDemoMode(): boolean {
-  return process.env.DEMO_MODE === 'true';
+  // Kontrollera om vi är på server-sidan
+  if (typeof window === 'undefined') {
+    return process.env.DEMO_MODE === 'true';
+  }
+  // På klient-sidan, returnera false (API:et hanterar demo mode)
+  return false;
 }
