@@ -2,9 +2,12 @@
 
 ## ✅ Kod Status
 Alla fixar är implementerade och pushade till GitHub:
-- Commit: `9451738` (senaste)
+- Commit: `622c48f` (senaste)
 - Repository: `https://github.com/paradoxapiko-maker/aurelia-market.git`
 - Branch: `main`
+
+## 🚨 VIKTIGT: Supabase-initiering Fix
+**Senaste fix (commit `e5b94fd`)**: Supabase-klienten initieras nu korrekt i demo-läge med giltiga placeholder-URL:er för att undvika "Invalid supabaseUrl" fel.
 
 ## 🔧 Fixar som implementerats
 
@@ -38,28 +41,30 @@ Alla fixar är implementerade och pushade till GitHub:
 ### Steg 2: Konfigurera Environment Variables
 Gå till Project Settings → Environment Variables och lägg till:
 
-```bash
-# Supabase (REQUIRED för production)
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-SUPABASE_SERVICE_KEY=your-supabase-service-key
+**🔴 KRITISKT: Lägg till DEMO_MODE först!**
 
-# Stripe (REQUIRED för betalningar)
-NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_your_key
-STRIPE_SECRET_KEY=sk_test_your_key
-STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+```bash
+# Demo Mode (REQUIRED för första deployment)
+DEMO_MODE=true
 
 # JWT (REQUIRED)
-JWT_SECRET=your-jwt-secret-key-change-this
+JWT_SECRET=aurelia-market-production-secret-2024-change-this-to-random-string
 
 # API Key Encryption (REQUIRED)
-API_KEY_ENCRYPTION_SECRET=your-encryption-secret-key-change-this
+API_KEY_ENCRYPTION_SECRET=aurelia-encryption-secret-2024-change-this-to-random-string
 
-# App URL (REQUIRED)
+# App URL (REQUIRED - ändra till din Vercel-URL)
 NEXT_PUBLIC_APP_URL=https://your-vercel-url.vercel.app
 
-# Demo Mode (OPTIONAL - sätt till true för demo utan databas)
-DEMO_MODE=true
+# Stripe Test Keys (fungerar utan riktig Stripe)
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_placeholder
+STRIPE_SECRET_KEY=sk_test_placeholder
+STRIPE_WEBHOOK_SECRET=whsec_placeholder
+
+# Supabase Placeholders (behövs för att undvika build-fel)
+NEXT_PUBLIC_SUPABASE_URL=https://demo.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo
+SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo
 ```
 
 ### Steg 3: Demo Mode vs Production Mode
@@ -89,6 +94,14 @@ DEMO_MODE=false
 4. ELLER: Gör en liten ändring och pusha till GitHub
 
 ## 🐛 Troubleshooting
+
+### Problem: "Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL"
+**Status:** ✅ FIXAT i commit `e5b94fd`
+**Orsak:** Supabase-klienten initierades med ogiltiga placeholder-URL:er
+**Lösning:** 
+- `src/lib/supabase.ts` använder nu giltiga demo-URL:er när `DEMO_MODE=true`
+- **VIKTIGT:** Sätt `DEMO_MODE=true` i Vercel miljövariabler
+- Se FIX-REGISTRERING-SUPABASE.md för detaljer
 
 ### Problem: "useSearchParams() should be wrapped in a suspense boundary"
 **Status:** ✅ FIXAT i commit `4b711db`
