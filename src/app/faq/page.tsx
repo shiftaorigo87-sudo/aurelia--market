@@ -51,7 +51,7 @@ export default function FAQPage() {
             <h2 className="text-xl font-semibold mb-3">Hur spårar jag min beställning?</h2>
             <p className="text-gray-700">
               När din order har skickats får du ett e-postmeddelande med en spårningslänk. 
-              Du kan också logga in på ditt konto och se orderstatus under "Mina Ordrar".
+              Du kan också logga in på ditt konto och se orderstatus under &quot;Mina Ordrar&quot;.
             </p>
           </div>
 

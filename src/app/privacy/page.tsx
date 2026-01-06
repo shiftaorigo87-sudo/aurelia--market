@@ -12,7 +12,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-2xl font-semibold mb-4 text-gray-900">1. Inledning</h2>
             <p className="leading-relaxed">
-              Aurelia Market AB ("vi", "oss", "vår") värnar om din integritet och är engagerade i att skydda 
+              Aurelia Market AB (&quot;vi&quot;, &quot;oss&quot;, &quot;vår&quot;) värnar om din integritet och är engagerade i att skydda 
               dina personuppgifter. Denna integritetspolicy förklarar hur vi samlar in, använder och skyddar 
               din information när du besöker vår webbplats och använder våra tjänster.
             </p>

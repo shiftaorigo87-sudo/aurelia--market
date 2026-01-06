@@ -67,7 +67,7 @@ export default function ShippingPage() {
               <li>Beräknad leveranstid</li>
             </ul>
             <p className="text-gray-700">
-              Du kan också logga in på ditt konto och se orderstatus under "Mina Ordrar".
+              Du kan också logga in på ditt konto och se orderstatus under &quot;Mina Ordrar&quot;.
             </p>
           </section>
 
