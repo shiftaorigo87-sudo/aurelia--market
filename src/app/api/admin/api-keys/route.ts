@@ -7,12 +7,12 @@ import crypto from 'crypto';
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
 
-// Krypteringsnyckel från miljövariabel
-const ENCRYPTION_KEY = process.env.API_KEY_ENCRYPTION_SECRET || 'default-secret-key-change-in-production';
-const ALGORITHM = 'aes-256-cbc';
-
 // Kryptera API-nyckel
 function encryptApiKey(apiKey: string): { encrypted: string; iv: string } {
+  // Krypteringsnyckel från miljövariabel (hämtas vid runtime)
+  const ENCRYPTION_KEY = process.env.API_KEY_ENCRYPTION_SECRET || 'default-secret-key-change-in-production';
+  const ALGORITHM = 'aes-256-cbc';
+  
   const key = crypto.scryptSync(ENCRYPTION_KEY, 'salt', 32);
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
